@@ -1,0 +1,12 @@
+node_modules/
+.pnpm-store/
+
+# Runtime artifacts of the flow itself
+contract/contract.lock.json
+evidence/*.md
+evidence/*.txt
+evidence/.judgment-runs.json
+evidence/attempts.jsonl
+
+# Judgments and probes are project-specific; keep the templates, not the outputs
+verify/
