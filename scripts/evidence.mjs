@@ -27,7 +27,13 @@ if (sep === -1 || args.length === sep + 1) {
 
 const cmd = args.slice(sep + 1);
 const label = cmd.join(" ");
-const isJudgment = /judg|contract|verify|judge/i.test(label);
+// Judgment executions are budgeted. Unbounded retries reverse-engineer a hidden criterion.
+// Note: "contract" is deliberately NOT a trigger word — it appears too often in paths, and
+// treating `sed -i s/a/b/ contract/contract.judgment.md` as a judgment run silently eats the
+// budget for what is really a (blocked) write. Keep this list in sync with the DSH plugin's
+// isJudgmentCommand in dsh-claim-check.
+const JUDGMENT_PATTERN = /judg|verify|judge/i;
+const isJudgment = JUDGMENT_PATTERN.test(label);
 
 mkdirSync(EVIDENCE_DIR, { recursive: true });
 
